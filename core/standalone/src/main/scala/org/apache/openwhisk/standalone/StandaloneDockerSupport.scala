@@ -107,7 +107,7 @@ object StandaloneDockerSupport {
 
   /**
    * Returns the hostname to access the playground.
-   * It defaults to localhost but it can be overriden
+   * It defaults to localhost but it can be overridden
    * and it is useful when the standalone is run in a container.
    */
   def getExternalHostName(): String = {
@@ -148,12 +148,12 @@ object StandaloneDockerSupport {
   }
 
   def prePullImage(imageName: String)(implicit logging: Logging): Unit = {
-    //docker images openwhisk/action-nodejs-v10:1.16.0
+    //docker images openwhisk/action-nodejs-v14:nightly
     //REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
-    //openwhisk/action-nodejs-v10   1.16.0              dbb0f8e1a050        5 days ago          967MB
+    //openwhisk/action-nodejs-v14   nightly             dbb0f8e1a050        5 days ago          967MB
     val imageResult = s"$dockerCmd images $imageName".!!
     val imageExist = imageResult.linesIterator.toList.size > 1
-    if (!imageExist || imageName.contains(":1.16.0")) {
+    if (!imageExist || imageName.contains(":nightly")) {
       logging.info(this, s"Docker Pre pulling $imageName")
       s"$dockerCmd pull $imageName".!!
     }

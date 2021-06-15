@@ -85,6 +85,10 @@ class WhiskConfig(requiredProperties: Map[String, String],
   val triggerFirePerMinuteLimit = this(WhiskConfig.triggerFirePerMinuteLimit)
   val actionSequenceLimit = this(WhiskConfig.actionSequenceMaxLimit)
   val controllerSeedNodes = this(WhiskConfig.controllerSeedNodes)
+
+  val schedulerHost = this(WhiskConfig.schedulerHost)
+  val schedulerRpcPort = this(WhiskConfig.schedulerRpcPort)
+  val schedulerAkkaPort = this(WhiskConfig.schedulerAkkaPort)
 }
 
 object WhiskConfig {
@@ -190,11 +194,16 @@ object WhiskConfig {
   val actionInvokeConcurrentLimit = "limits.actions.invokes.concurrent"
   val triggerFirePerMinuteLimit = "limits.triggers.fires.perMinute"
   val controllerSeedNodes = "akka.cluster.seed.nodes"
+
+  val schedulerHost = "whisk.scheduler.endpoints.host"
+  val schedulerRpcPort = "whisk.scheduler.endpoints.rpcPort"
+  val schedulerAkkaPort = "whisk.scheduler.endpoints.akkaPort"
 }
 
 object ConfigKeys {
   val cluster = "whisk.cluster"
   val loadbalancer = "whisk.loadbalancer"
+  val fraction = "whisk.fraction"
   val buildInformation = "whisk.info"
 
   val couchdb = "whisk.couchdb"
@@ -204,6 +213,8 @@ object ConfigKeys {
   val kafkaProducer = s"$kafka.producer"
   val kafkaConsumer = s"$kafka.consumer"
   val kafkaTopics = s"$kafka.topics"
+  val kafkaTopicsPrefix = s"$kafkaTopics.prefix"
+  val kafkaTopicsUserEventPrefix = s"$kafkaTopics.user-event.prefix"
 
   val memory = "whisk.memory"
   val timeLimit = "whisk.time-limit"
@@ -257,12 +268,18 @@ object ConfigKeys {
   val controller = s"whisk.controller"
   val controllerActivation = s"$controller.activation"
 
+  val etcd = "whisk.etcd"
+  val etcdLeaseTimeout = "whisk.etcd.lease.timeout"
+  val etcdPoolThreads = "whisk.etcd.pool.threads"
+
   val activationStore = "whisk.activation-store"
   val elasticSearchActivationStore = s"$activationStore.elasticsearch"
   val activationStoreWithFileStorage = s"$activationStore.with-file-storage"
 
   val metrics = "whisk.metrics"
   val featureFlags = "whisk.feature-flags"
+
+  val durationChecker = s"whisk.duration-checker"
 
   val whiskConfig = "whisk.config"
   val sharedPackageExecuteOnly = s"whisk.shared-packages-execute-only"
@@ -276,4 +293,10 @@ object ConfigKeys {
   val parameterStorage = "whisk.parameter-storage"
 
   val azBlob = "whisk.azure-blob"
+
+  val schedulerMaxPeek = "whisk.scheduler.max-peek"
+
+  val whiskClusterName = "whisk.cluster.name"
+
+  val dataManagementServiceRetryInterval = "whisk.scheduler.data-management-service.retryInterval"
 }

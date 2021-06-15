@@ -26,8 +26,13 @@ whisk {
         topics {
             KafkaConnectorTestTopic {
                 segment-bytes   =  536870912
-                retention-bytes = 1073741824
+                retention-bytes = 2147483648
+               #retention-bytes = 1073741824
                 retention-ms    = 3600000
+            }
+            prefix = "{{ kafka.topicsPrefix }}"
+            user-event {
+                prefix = "{{ kafka.topicsUserEventPrefix }}"
             }
         }
         common {
@@ -97,12 +102,42 @@ whisk {
     parameter-storage {
         current = "off"
     }
-    
+
     elasticsearch {
         docker-image = "{{ elasticsearch.docker_image | default('docker.elastic.co/elasticsearch/elasticsearch:' ~ elasticsearch.version ) }}"
     }
 
     helm.release = "release"
+    runtime.delete.timeout = "30 seconds"
+
+    duration-checker {
+        time-window = "{{ durationChecker.timeWindow }}"
+    }
+
+    activation-store {
+        elasticsearch {
+            protocol      = "{{ db.elasticsearch.protocol }}"
+            hosts         = "{{ elasticsearch_connect_string }}"
+            index-pattern = "{{ db.elasticsearch.index_pattern }}"
+            username      = "{{ db.elasticsearch.auth.admin.username }}"
+            password      = "{{ db.elasticsearch.auth.admin.password }}"
+        }
+    }
+
+    etcd {
+        hosts = "{{ etcd_connect_string }}"
+        lease {
+            timeout = "{{ etcd.lease.timeout }}"
+        }
+        pool {
+            threads = "{{ etcd.pool_threads }}"
+        }
+    }
+
+    scheduler {
+        protocol = "{{ scheduler.protocol }}"
+    }
+
 }
 
 #test-only overrides so that tests can override defaults in application.conf (todo: move all defaults to reference.conf)
