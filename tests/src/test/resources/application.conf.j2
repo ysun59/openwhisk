@@ -26,7 +26,8 @@ whisk {
         topics {
             KafkaConnectorTestTopic {
                 segment-bytes   =  536870912
-                retention-bytes = 1073741824
+                retention-bytes = 2147483648
+               #retention-bytes = 1073741824
                 retention-ms    = 3600000
             }
             prefix = "{{ kafka.topicsPrefix }}"
